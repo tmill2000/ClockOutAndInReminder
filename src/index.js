@@ -14,13 +14,13 @@ export default {
 		const date = new Date();
 		const hours = date.getHours();
 		const minutes = date.getMinutes();
-		if(hours === 7){
+		if(hours <= 7){
 			clockOut = false;
 		} else if(hours === 12 && minutes > 30){
 			clockOut = true;
 		} else if(hours === 12 && minutes <= 30){
 			clockOut = false;
-		} else if(hours === 3){
+		} else if(hours >= 15){
 			clockOut = true
 		}
 		const clockInMessage = `It is ${date.toLocaleDateString()}. Time to clock in`;
@@ -40,20 +40,20 @@ export default {
 					}
 				],
 				"from": {
-					"email": "test@mailinator.com",
+					"email": "qewlv2+21mo2ue5655gra67fpu4cvau@sharklasers.com",
 					"name": "Tyler",
 				},
-				"subject": "Kronos Time :O",
+				"subject": "Kronos",
 				"content": [{
 					"type": "text/plain",
 					"value": clockOut ? clockOutMessage: clockInMessage,
 				}],
 			}),
 		})
-		const resp = await fetch(requestConfig);
-		// const respText = await resp.text();
-		// console.log("here: " + respText);
-		// console.log(resp.status);
-		return new Response(JSON.stringify(clockOut));
+		if(requestConfig.method === 'POST'){
+			const resp = await fetch(requestConfig);
+			const respText = await resp.text();
+			return new Response(`Status: ${resp.status} ${JSON.stringify(respText)} Clock Out: ${clockOut}`);
+		}
 	},
 };
